@@ -22,7 +22,14 @@ layout: default
             {% endif %}
             <span class="meta">
               {{ page.date | date: '%B %d, %Y' }} &middot; {% include
-              read_time.html content=page.content %}
+              read_time.html content=page.content %}<br />
+              Category: {% if post %} {% assign categories = post.categories %}
+              {% else %} {% assign categories = page.categories %} {% endif %}
+              {% for category in categories %}
+              <a href="{{site.baseurl}}/categories/#{{category|slugize}}"
+                >{{category}}</a
+              >
+              {% unless forloop.last %}&nbsp;{% endunless %} {% endfor %}
             </span>
           </div>
         </div>
@@ -36,6 +43,37 @@ layout: default
         {{ content }}
 
         <hr />
+
+        <!-- Disqus Plugin -->
+
+        <div id="disqus_thread"></div>
+        <script>
+          /**
+           *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+           *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+          /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+          (function () {
+            // DON'T EDIT BELOW THIS LINE
+            var d = document,
+              s = d.createElement("script");
+            s.src = "https://quantumdata.disqus.com/embed.js";
+            s.setAttribute("data-timestamp", +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+        <noscript
+          >Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript"
+            >comments powered by Disqus.</a
+          ></noscript
+        >
+
+        <!-- Disqus Plugin xx -->
 
         <div class="clearfix">
           {% if page.previous.url %}
